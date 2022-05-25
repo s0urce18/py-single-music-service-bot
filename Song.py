@@ -34,52 +34,52 @@ dz = Client() # Deezer
 
 class Song:
 
-    _name: str = "" # name
-    _ytm_id: str = "" # YT Music ID
-    _sp_id: str = "" # Spotify ID
-    _dz_id: str = "" # Deezer ID
+    __name: str = "" # name
+    __ytm_id: str = "" # YT Music ID
+    __sp_id: str = "" # Spotify ID
+    __dz_id: str = "" # Deezer ID
 
     def __init__(self, name: str = "", ytm_link: str = "", sp_link: str = "", dz_link: str = "") -> None:
         try:
             if name != "":
-                self._name = name
+                self.__name = name
             elif ytm_link != "":
-                self._name = ytm.get_song(videoId=ytm_link[ytm_link.find("=") + 1 : ytm_link.find("&")])["videoDetails"]["title"]
+                self.__name = ytm.get_song(videoId=ytm_link[ytm_link.find("=") + 1 : ytm_link.find("&")])["videoDetails"]["title"]
             elif sp_link != "":
-                self._name = sp.track(sp_link)["name"]
+                self.__name = sp.track(sp_link)["name"]
             elif dz_link != "":
-                self._name = dz.get_track(dz_link[dz_link.rfind("/") + 1 : ]).title
+                self.__name = dz.get_track(dz_link[dz_link.rfind("/") + 1 : ]).title
             else:
                 raise Exception("We can't find your track. Please, give us some info(name or any link)")
         except:
             print("Something went wrong. Recheck data that you give")
 
-    def _count_ytm_id(self) -> None: # count YT Music ID
-        self._ytm_id = str(ytm.search(query=self._name, filter="songs")[0]["videoId"])
+    def __count_ytm_id(self) -> None: # count YT Music ID
+        self.__ytm_id = str(ytm.search(query=self.__name, filter="songs")[0]["videoId"])
 
-    def _count_sp_id(self) -> None: # count Spotify ID 
-        self._sp_id = str(sp.search(q=self._name, type="track")["tracks"]["items"][0]["id"])
+    def __count_sp_id(self) -> None: # count Spotify ID 
+        self.__sp_id = str(sp.search(q=self.__name, type="track")["tracks"]["items"][0]["id"])
 
-    def _count_dz_id(self) -> None: # count Deezer ID
-        self._dz_id = str(dz.search(query=self._name)[0].id)
+    def __count_dz_id(self) -> None: # count Deezer ID
+        self.__dz_id = str(dz.search(query=self.__name)[0].id)
 
     def get_name(self) -> str: # get name
-        return self._name
+        return self.__name
 
     def get_ytm_id(self) -> str: # get YT Music ID
-        if self._ytm_id == "":
-            self._count_ytm_id()
-        return self._ytm_id
+        if self.__ytm_id == "":
+            self.__count_ytm_id()
+        return self.__ytm_id
 
     def get_sp_id(self) -> str: # get Spotify ID
-        if self._sp_id == "":
-            self._count_sp_id()
-        return self._sp_id
+        if self.__sp_id == "":
+            self.__count_sp_id()
+        return self.__sp_id
 
     def get_dz_id(self) -> str: # get Deezer ID
-        if self._dz_id == "":
-            self._count_dz_id()
-        return self._dz_id
+        if self.__dz_id == "":
+            self.__count_dz_id()
+        return self.__dz_id
 
     def get_ytm_link(self) -> str: # get YT Music link
         return "music.youtube.com/watch/" + self.get_ytm_id()
