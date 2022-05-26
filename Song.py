@@ -13,20 +13,16 @@ sp_config_file = open("spotify_config.json", "r")
 
 """spotify_config.json:
 {
-    "cid": *Client ID*,
-    "secret": *Client Secret*,
-    "rur": *Redirect URIs*,
+    "client_id": *CLIENT ID*,
+    "client_secret": *CLIENT Secret*,
+    "redirect_uri": *REDIRECTET URIS*,
     "scope": "user-library-read",
-    "user": *User name*
+    "username": *USER NAME*
 }
 """
 
 sp_config_dict = json.loads(sp_config_file.read())
-sp = Spotify(auth_manager=SpotifyOAuth(client_id=sp_config_dict["cid"], 
-                                        client_secret=sp_config_dict["secret"], 
-                                        redirect_uri=sp_config_dict["rur"], 
-                                        scope=sp_config_dict["scope"], 
-                                        username=sp_config_dict["user"])
+sp = Spotify(auth_manager=SpotifyOAuth(**sp_config_dict)
             )
 # ------------------------------------------
 
